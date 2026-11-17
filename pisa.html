@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Panel Estadístico PISA 2025 · Resultados Reales y Simulación de Comprensión Lectora en América Latina" />
+  <title>Panel PISA 2025 · Comprensión Lectora</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+
+  <style>
+    /* ============================================================
+       1. SISTEMA DE DISEÑO — Negro · Verde · Blanco · Dorado
+       ============================================================ */
+    :root {
+      --bg-deep:      #0A261A;
+      --bg-deep-2:    #061A11;
+      --card:         #FFFFFF;
+      --green:        #0F4C2E;
+      --green-hover:  #16653E;
+      --green-soft:   #E8F2EC;
+      --green-line:   #B9D4C4;
+      --ink:          #111111;
+      --label:        #4A4A4A;
+      --muted:        #7B8794;
+      --error:        #C62828;
+      --error-soft:   #FDECEC;
+      --border-soft:  #E6E8E7;
+      --gold:         #C6A34F;
+      --gold-light:   #E5C77E;
+      --gold-soft:    #FDF9EB;
+
+      --shadow:       0 24px 60px -18px rgba(0,0,0,.45);
+      --shadow-sm:    0 8px 24px -10px rgba(0,0,0,.3);
+      --radius:       16px;
+      --radius-sm:    10px;
+
+      --sp-1: 8px;
+      --sp-2: 16px;
+      --sp-3: 24px;
+      --sp-4: 32px;
+      --sp-5: 40px;
+      --sp-6: 48px;
+      --sp-8: 64px;
+
+      --font-title: "Playfair Display", Georgia, serif;
+      --font-sans:  "Plus Jakarta Sans", system-ui, sans-serif;
+      --max-width:  1320px;
+    }
+
+    /* ============================================================
+       2. RESET Y BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, #0F4C2E 0%, transparent 55%),
+        radial-gradient(900px 500px at 110% 10%, #0B3A24 0%, transparent 50%),
+        linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-deep-2) 100%);
+      background-attachment: fixed;
+      color: var(--ink);
+      line-height: 1.6;
+      font-size: 16px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0);
+      white-space: nowrap; border: 0;
+    }
+
+    /* ============================================================
+       3. HERO CON IMÁGENES LATERALES
+       ============================================================ */
+    .hero {
+      position: relative;
+      padding: var(--sp-6) var(--sp-3) var(--sp-4);
+      overflow: hidden;
+    }
+
+    .hero__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr) minmax(0, 1fr);
+      align-items: center;
+      gap: var(--sp-4);
+    }
+
+    .hero__media {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 3 / 4;
+      box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8), 0 0 0 1px rgba(198,163,79,0.3);
+      background: #0F4C2E;
+      transform: scale(0.95) rotate(-1deg);
+      transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+      z-index: 1;
+    }
+    .hero__media--right { transform: scale(0.95) rotate(1deg); }
+    
+    .hero__media:hover {
+      transform: scale(1) rotate(0deg);
+      box-shadow: 0 40px 80px -20px rgba(0,0,0,0.9), 0 0 0 2px var(--gold);
+      z-index: 2;
+    }
+
+    .hero__media img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      background: #000;
+      display: block;
+      transition: transform 0.7s ease;
+    }
+    .hero__media:hover img { transform: scale(1.05); }
+
+    .hero__media::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(10,38,26,0) 60%, rgba(6,26,17,.85) 100%);
+      pointer-events: none;
+      opacity: 0.8;
+      transition: opacity 0.4s ease;
+    }
+    .hero__media:hover::after { opacity: 0.4; }
+
+    .hero__content {
+      text-align: center;
+      color: #FFFFFF;
+      padding: 0 var(--sp-2);
+    }
+
+    .hero__eyebrow {
+      display: inline-block;
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      background: rgba(15,76,46,0.6);
+      padding: 8px 18px;
+      border-radius: 999px;
+      margin-bottom: var(--sp-2);
+      border: 1px solid rgba(198,163,79,.5);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .hero__title {
+      font-family: var(--font-title);
+      font-size: clamp(1.8rem, 3.5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -.01em;
+      margin-bottom: var(--sp-2);
+      text-shadow: 0 4px 30px rgba(0,0,0,.5);
+    }
+    .hero__title span { 
+      color: var(--gold); 
+      display: block;
+      margin-top: 4px;
+    }
+
+    .hero__subtitle {
+      font-size: clamp(.95rem, 1.4vw, 1.15rem);
+      color: #C9DDD2;
+      max-width: 580px;
+      margin: 0 auto;
+      font-weight: 500;
+    }
+
+    /* ============================================================
+       4. LAYOUT PRINCIPAL
+       ============================================================ */
+    .layout {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: var(--sp-3) var(--sp-3) var(--sp-6); /* Ajuste de padding inferior */
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-5);
+      flex: 1;
+    }
+
+    /* ============================================================
+       5. SECCIONES Y TARJETAS
+       ============================================================ */
+    .section-head {
+      text-align: center;
+      max-width: 820px;
+      margin: 0 auto var(--sp-4);
+      color: #EAF3EE;
+    }
+
+    .section-head__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--gold-light);
+      background: rgba(198,163,79,.15);
+      padding: 8px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(198,163,79,.5);
+      margin-bottom: var(--sp-2);
+    }
+
+    .section-head__title {
+      font-family: var(--font-title);
+      font-size: clamp(1.7rem, 3vw, 2.6rem);
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1.1;
+      margin-bottom: var(--sp-2);
+    }
+
+    .section-head__sub {
+      font-size: 1rem;
+      color: #B9D4C4;
+      line-height: 1.7;
+    }
+    .section-head__sub strong { color: #FFFFFF; }
+
+    .reales-panel {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: var(--sp-4); /* Más espacio entre tarjetas laterales */
+      align-items: stretch;
+      margin-bottom: var(--sp-5);
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: var(--sp-4); /* Más padding interno para que respire */
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow .3s ease, transform .3s ease;
+    }
+    .card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+
+    .card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-2);
+      margin-bottom: var(--sp-4); /* Más separación del título al contenido */
+      padding-bottom: var(--sp-2);
+      border-bottom: 2px solid var(--green-soft);
+    }
+
+    .card__title {
+      font-family: var(--font-title);
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      gap: var(--sp-1);
+    }
+    .card__title::before {
+      content: "";
+      display: inline-block;
+      width: 4px; height: 22px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    .card__hint {
+      font-size: .8rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .chart-wrapper { position: relative; width: 100%; height: 360px; flex: 1; }
+    .tabla-wrapper { overflow-x: auto; border-radius: var(--radius-sm); flex: 1; }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .9rem;
+    }
+    table.data-table thead th {
+      text-align: left;
+      font-size: .72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: #FFFFFF;
+      background: var(--green);
+      padding: var(--sp-2);
+      border-bottom: 3px solid var(--gold);
+      white-space: nowrap;
+    }
+    table.data-table thead th:first-child { border-top-left-radius: var(--radius-sm); }
+    table.data-table thead th:last-child  { border-top-right-radius: var(--radius-sm); }
+
+    table.data-table tbody td {
+      padding: var(--sp-2) var(--sp-2);
+      border-bottom: 1px solid var(--border-soft);
+      vertical-align: middle;
+    }
+    table.data-table tbody tr:last-child td { border-bottom: none; }
+    table.data-table tbody tr:hover { background: var(--green-soft); }
+
+    .cell-rank {
+      font-weight: 800;
+      color: var(--gold);
+      text-align: center;
+      width: 48px;
+      font-size: 1rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .cell-country { font-weight: 700; color: var(--ink); }
+    .cell-score {
+      font-weight: 800;
+      color: var(--green);
+      text-align: right;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .trend {
+      font-size: .76rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    .trend--down { background: var(--error-soft); color: var(--error); }
+    .trend--up   { background: #E3F5EC; color: #14653F; }
+    .trend--stable { background: #EEF1F5; color: #5B6675; }
+
+    .note {
+      font-size: .85rem;
+      color: var(--label);
+      background: var(--gold-soft);
+      padding: var(--sp-2) var(--sp-3);
+      border-left: 4px solid var(--gold);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-top: var(--sp-3);
+    }
+
+    /* ============================================================
+       6. NIVELES DE DESEMPEÑO
+       ============================================================ */
+    .levels-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: var(--sp-3);
+      margin-bottom: var(--sp-5);
+    }
+
+    .level-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(185, 212, 196, 0.2);
+      border-radius: var(--radius);
+      padding: var(--sp-3);
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+    .level-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .level-card__badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: var(--sp-2);
+    }
+    
+    .level-card__title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: var(--sp-1);
+      font-family: var(--font-title);
+    }
+
+    .level-card__desc {
+      font-size: 0.9rem;
+      color: #C9DDD2;
+      line-height: 1.5;
+    }
+
+    .lvl-avanzado .level-card__badge { background: #14653F; color: #E3F5EC; border: 1px solid #2B8A5A; }
+    .lvl-avanzado { border-left: 4px solid #14653F; }
+    
+    .lvl-intermedio .level-card__badge { background: #8A5A00; color: #FDF4D8; border: 1px solid #C6A34F; }
+    .lvl-intermedio { border-left: 4px solid #C6A34F; }
+
+    .lvl-basico .level-card__badge { background: #9B1C1C; color: #FDECEC; border: 1px solid #C62828; }
+    .lvl-basico { border-left: 4px solid #C62828; }
+
+    .lvl-debajo .level-card__badge { background: #4A5568; color: #EEF1F5; border: 1px solid #7B8794; }
+    .lvl-debajo { border-left: 4px solid #7B8794; }
+
+    /* ============================================================
+       7. SIMULACIÓN Y MÁS ALLÁ
+       ============================================================ */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      color: #9CB8A8;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      margin: var(--sp-2) 0 var(--sp-4);
+    }
+    .divider::before, .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(185,212,196,.6), transparent);
+    }
+
+    .simulation-section { display: flex; flex-direction: column; gap: var(--sp-5); }
+
+    .countries-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--sp-4); /* Más separación entre países */
+    }
+
+    .country-block {
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--card);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .country-block__header {
+      background: var(--green);
+      color: #FFFFFF;
+      padding: 12px var(--sp-3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-1);
+      border-bottom: 3px solid var(--gold);
+    }
+    .country-block__name {
+      font-size: .95rem;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .country-block__count {
+      font-size: .72rem;
+      font-weight: 700;
+      color: #C9DDD2;
+      background: rgba(255,255,255,.15);
+      padding: 2px 10px;
+      border-radius: 999px;
+    }
+
+    .student-list { list-style: none; flex: 1; }
+
+    .student-item {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-1);
+      padding: 10px var(--sp-3);
+      border-bottom: 1px solid var(--border-soft);
+      transition: background .2s ease;
+    }
+    .student-item:last-child { border-bottom: none; }
+    .student-item:nth-child(even) { background: #FAFBFA; }
+    .student-item:hover { background: var(--green-soft); }
+
+    .student-item__number {
+      font-size: .72rem;
+      font-weight: 800;
+      color: var(--muted);
+      min-width: 22px;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+    .student-item__name {
+      flex: 1;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+    .student-item__input {
+      font-family: inherit;
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--green);
+      padding: 6px 8px;
+      border: 1px solid var(--green-line);
+      border-radius: 8px;
+      background: #FFFFFF;
+      width: 76px;
+      text-align: center;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    .student-item__input:focus {
+      outline: none;
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(15,76,46,.15);
+    }
+
+    .apply-section { display: flex; justify-content: center; padding-top: var(--sp-4); }
+
+    .btn-apply {
+      font-family: inherit;
+      font-size: .95rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-hover) 100%);
+      border: 1px solid rgba(198,163,79,.5);
+      border-radius: var(--radius-sm);
+      padding: var(--sp-2) var(--sp-6);
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .25s ease;
+      box-shadow: 0 6px 20px -8px rgba(15,76,46,.6);
+    }
+    .btn-apply:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -8px rgba(15,76,46,.7);
+      border-color: var(--gold);
+    }
+    .btn-apply:active { transform: translateY(0); }
+
+    /* KPIs */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--sp-4); /* Aumentado para evitar que choquen */
+      margin-bottom: var(--sp-4); /* Separación con el bloque inferior */
+    }
+    
+    .kpi {
+      background: var(--card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm);
+      padding: var(--sp-3) var(--sp-4); /* Más espacio horizontal interno */
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-1);
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow .25s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .kpi::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 5px;
+      background: var(--gold);
+    }
+    .kpi:hover { box-shadow: var(--shadow); }
+    .kpi__label {
+      font-size: .75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--label);
+    }
+    .kpi__value {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1.1;
+      font-variant-numeric: tabular-nums;
+    }
+    .kpi__meta { font-size: .8rem; color: var(--muted); font-weight: 500; }
+
+    .visual-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: var(--sp-4); /* Aumentado para que no se peguen las tarjetas de abajo */
+      align-items: start;
+    }
+    .chart-wrapper--sim { height: 380px; }
+
+    .badge {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+    .badge--none { background: #EEF1F5; color: #5B6675; border-color: #D8DEE6; }
+    .badge--bad  { background: var(--error-soft); color: var(--error); border-color: #F5C2C2; }
+    .badge--mid  { background: var(--gold-soft); color: #8A5A00; border-color: #F0DFA8; }
+    .badge--good { background: #E3F5EC; color: #14653F; border-color: #B9E3CD; }
+
+    /* ============================================================
+       8. RESPONSIVE
+       ============================================================ */
+    @media (max-width: 1024px) {
+      .hero__inner { 
+        grid-template-columns: 1fr; 
+        gap: var(--sp-4);
+        padding-top: var(--sp-4);
+      }
+      .hero__media { 
+        max-width: 280px; 
+        margin: 0 auto; 
+        aspect-ratio: 4/5;
+        transform: none;
+      }
+      .hero__media--right { transform: none; }
+      .hero__media:hover { transform: scale(1.02); }
+      
+      .reales-panel { grid-template-columns: 1fr; gap: var(--sp-3); }
+      .visual-grid { grid-template-columns: 1fr; gap: var(--sp-3); }
+      .chart-wrapper--sim { height: 340px; }
+      .chart-wrapper { height: 300px; }
+    }
+
+    @media (max-width: 780px) {
+      .layout { padding: var(--sp-2) var(--sp-2) var(--sp-4); gap: var(--sp-4); }
+      .kpi-grid { grid-template-columns: 1fr; gap: var(--sp-2); }
+      .countries-grid { grid-template-columns: 1fr; gap: var(--sp-3); }
+      .chart-wrapper { height: 260px; }
+      .chart-wrapper--sim { height: 280px; }
+      .card { padding: var(--sp-3); }
+      .btn-apply { width: 100%; padding: var(--sp-2) var(--sp-3); }
+      
+      .hero__inner { display: flex; flex-direction: column; }
+      .hero__content { order: -1; margin-bottom: var(--sp-3); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       HERO CON IMÁGENES LATERALES
+       ============================================================ -->
+  <header class="hero" role="banner">
+    <div class="hero__inner">
+
+      <!-- Imagen izquierda -->
+      <figure class="hero__media hero__media--left">
+        <img src="amj.jpg" alt="Escudo institucional Ángel Mendoza Justiniano"
+             onerror="this.style.display='none';this.parentNode.style.background='linear-gradient(135deg,#0F4C2E,#0A261A)';" />
+      </figure>
+
+      <!-- Contenido central -->
+      <div class="hero__content">
+        <span class="hero__eyebrow">Evaluación Internacional · OCDE</span>
+        <h1 class="hero__title">COMPRENSIÓN LECTORA<br><span>PISA 2025 · AMÉRICA LATINA</span></h1>
+        <p class="hero__subtitle">Resultados oficiales y panel estadístico de simulación con los 7 mejores países de la región.</p>
+      </div>
+
+      <!-- Imagen derecha -->
+      <figure class="hero__media hero__media--right">
+        <img src="so.jpeg" alt="Escudo institucional Ciencias Sociales"
+             onerror="this.style.display='none';this.parentNode.style.background='linear-gradient(135deg,#0A261A,#0F4C2E)';" />
+      </figure>
+
+    </div>
+  </header>
+
+  <!-- ============================================================
+       CONTENIDO PRINCIPAL
+       ============================================================ -->
+  <main class="layout" role="main">
+
+    <!-- SECCIÓN: RESULTADOS REALES PISA 2025 -->
+    <section aria-labelledby="reales-title">
+
+      <div class="section-head">
+        <span class="section-head__badge">📊 Datos Oficiales y Reales</span>
+        <h2 class="section-head__title" id="reales-title">Resultados Reales de la Prueba PISA 2025</h2>
+        <p class="section-head__sub">
+          Los 7 mejores países de América Latina en comprensión lectora, ordenados de mayor a menor.
+          Ninguno superó el promedio OCDE de <strong>461 puntos</strong>; Chile lidera con <strong>436</strong>.
+        </p>
+      </div>
+
+      <div class="reales-panel">
+
+        <article class="card">
+          <div class="card__header">
+            <h3 class="card__title">Puntaje Real en Lectura (PISA 2025)</h3>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="chart-real" role="img" aria-label="Gráfico de barras con los puntajes reales de PISA 2025"></canvas>
+          </div>
+          <div class="note">
+            🇲🇽 México y 🇧🇷 Brasil empatan en el 4.º puesto con <strong>408 pts</strong>. Chile lidera con <strong>436 pts</strong>, a 25 del promedio OCDE.
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__header">
+            <h3 class="card__title">Tabla Comparativa Oficial</h3>
+          </div>
+          <div class="tabla-wrapper">
+            <table class="data-table">
+              <caption class="visually-hidden">Resultados oficiales PISA 2025</caption>
+              <thead>
+                <tr>
+                  <th scope="col" style="text-align:center;">Puesto</th>
+                  <th scope="col">País</th>
+                  <th scope="col" style="text-align:right;">Puntaje</th>
+                  <th scope="col">vs. OCDE (461)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td class="cell-rank">1°</td><td class="cell-country">🇨🇱 Chile</td><td class="cell-score">436</td><td><span class="trend trend--down">▼ −25 pts</span></td></tr>
+                <tr><td class="cell-rank">2°</td><td class="cell-country">🇺🇾 Uruguay</td><td class="cell-score">423</td><td><span class="trend trend--down">▼ −38 pts</span></td></tr>
+                <tr><td class="cell-rank">3°</td><td class="cell-country">🇨🇷 Costa Rica</td><td class="cell-score">416</td><td><span class="trend trend--down">▼ −45 pts</span></td></tr>
+                <tr><td class="cell-rank">4°</td><td class="cell-country">🇲🇽 México</td><td class="cell-score">408</td><td><span class="trend trend--down">▼ −53 pts</span></td></tr>
+                <tr><td class="cell-rank">4°</td><td class="cell-country">🇧🇷 Brasil</td><td class="cell-score">408</td><td><span class="trend trend--down">▼ −53 pts</span></td></tr>
+                <tr><td class="cell-rank">6°</td><td class="cell-country">🇨🇴 Colombia</td><td class="cell-score">399</td><td><span class="trend trend--down">▼ −62 pts</span></td></tr>
+                <tr><td class="cell-rank">7°</td><td class="cell-country">🇵🇪 Perú</td><td class="cell-score">390</td><td><span class="trend trend--down">▼ −71 pts</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- NIVELES DE DESEMPEÑO -->
+      <div class="levels-grid">
+        <article class="level-card lvl-avanzado">
+          <span class="level-card__badge">Nivel Avanzado</span>
+          <h3 class="level-card__title">450 – 500 pts</h3>
+          <p class="level-card__desc">Evalúa información crítica, detecta sesgos y contrasta fuentes complejas.</p>
+        </article>
+        
+        <article class="level-card lvl-intermedio">
+          <span class="level-card__badge">Nivel Intermedio</span>
+          <h3 class="level-card__title">350 – 449 pts</h3>
+          <p class="level-card__desc">Comprende la idea principal, deduce causas y relaciona datos de gráficos.</p>
+        </article>
+
+        <article class="level-card lvl-basico">
+          <span class="level-card__badge">Nivel Básico / Mínimo</span>
+          <h3 class="level-card__title">250 – 349 pts</h3>
+          <p class="level-card__desc">Localiza información explícita y sencilla en un texto corto.</p>
+        </article>
+
+        <article class="level-card lvl-debajo">
+          <span class="level-card__badge">Debajo del Nivel Mínimo</span>
+          <h3 class="level-card__title">0 – 249 pts</h3>
+          <p class="level-card__desc">Tiene dificultades para extraer ideas básicas de lectura.</p>
+        </article>
+      </div>
+
+      <div class="divider">A continuación · Simulación Estadística</div>
+    </section>
+
+    <!-- SECCIÓN: SIMULACIÓN -->
+    <div class="simulation-section">
+
+      <section class="card" aria-labelledby="students-title">
+        <div class="card__header">
+          <h2 class="card__title" id="students-title">Registro de Puntajes por País (Simulación)</h2>
+          <span class="card__hint">Ingresa el puntaje de cada estudiante (0 – 500)</span>
+        </div>
+
+        <div class="countries-grid" id="countries-grid"></div>
+
+        <div class="apply-section">
+          <button type="button" class="btn-apply" id="apply-btn">Aplicar Puntajes y Actualizar Panel</button>
+        </div>
+      </section>
+
+      <div class="stats-section">
+
+        <section class="kpi-grid" aria-label="Resumen global de la muestra">
+          <article class="kpi">
+            <span class="kpi__label">Total Alumnos Evaluados</span>
+            <span class="kpi__value" id="kpi-total">0</span>
+            <span class="kpi__meta">Muestra registrada</span>
+          </article>
+          <article class="kpi">
+            <span class="kpi__label">Promedio Global Simulado</span>
+            <span class="kpi__value" id="kpi-average">0</span>
+            <span class="kpi__meta">Puntaje medio de los países</span>
+          </article>
+          <article class="kpi">
+            <span class="kpi__label">País Líder (Simulación)</span>
+            <span class="kpi__value" id="kpi-leader">—</span>
+            <span class="kpi__meta">Mayor puntaje promedio</span>
+          </article>
+        </section>
+
+        <section class="visual-grid" aria-label="Panel visual de resultados simulados">
+
+          <article class="card" aria-labelledby="chart-title">
+            <div class="card__header">
+              <h2 class="card__title" id="chart-title">Puntaje Promedio por País</h2>
+              <span class="card__hint">Escala 0 – 500</span>
+            </div>
+            <div class="chart-wrapper chart-wrapper--sim">
+              <canvas id="bar-chart" role="img" aria-label="Gráfico de barras de simulación"></canvas>
+            </div>
+          </article>
+
+          <article class="card" aria-labelledby="table-title">
+            <div class="card__header">
+              <h2 class="card__title" id="table-title">Tabla de Posiciones</h2>
+              <span class="card__hint">Orden: mayor a menor</span>
+            </div>
+            <div class="tabla-wrapper">
+              <table class="data-table">
+                <caption class="visually-hidden">Posiciones y rendimiento simulado</caption>
+                <thead>
+                  <tr>
+                    <th scope="col" style="text-align:center;">#</th>
+                    <th scope="col">País</th>
+                    <th scope="col" style="text-align:right;">Promedio</th>
+                    <th scope="col">Rendimiento</th>
+                  </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+              </table>
+            </div>
+          </article>
+
+        </section>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- PIE DE PÁGINA ELIMINADO SEGÚN SOLICITUD -->
+
+  <script>
+    "use strict";
+
+    const REAL_DATA = [
+      { country: "Chile",      score: 436, diff: -25 },
+      { country: "Uruguay",    score: 423, diff: -38 },
+      { country: "Costa Rica", score: 416, diff: -45 },
+      { country: "México",     score: 408, diff: -53 },
+      { country: "Brasil",     score: 408, diff: -53 },
+      { country: "Colombia",   score: 399, diff: -62 },
+      { country: "Perú",       score: 390, diff: -71 }
+    ];
+
+    const COUNTRIES = [
+      { name: "Chile",      students: ["JOSE ALEJANDRO LOPEZ UZEDA", "WENDALY CHOQUE FLORES", "ALBERT ALEXANDER GUARACHI RAMIREZ", "ARIEL AGUSTIN QUISPE MACHACA", "GUSTAVO DELGADO CONDORI"] },
+      { name: "Uruguay",    students: ["JOSE LUIS BERNABE CHOQUE", "MARIANE JHULIANA ZOLA BELTRAN", "EYDAN LINO MAMANI LAIME", "CRISTOPHER JANCO BUENO", "BENJAMIN NINA CHOQUECALLATA"] },
+      { name: "Costa Rica", students: ["FABIAN ALEJANDRO VALDA CONDE", "FERNANDO AYAVIRI BUENO", "CAMILA KENIA ZUÑAGUA ACARAPI", "AXEL RODRIGO CHOQUE FLORES", "ARACELY BARRETA CRISPIN"] },
+      { name: "México",     students: ["JUAN ALEJANDRO FLORES CHOQUE", "FABIANA TERESA VARGAS QUISPE", "MICAELA EVELYN ARROYO MOYA", "WILLIAM ABEL CAYOJA LOPEZ", "NILA DAIRA POZO MAYTA"] },
+      { name: "Brasil",     students: ["JOSE ANGEL MARTINEZ CHALLAPA", "MIRIAM BARRA SERRANO", "GONZALO BENIGNO CHAVEZ TAPIA", "RODRIGO PACHECO PEÑAFIEL", "LUIS ALEJANDRO PADILLA MONTAÑO"] },
+      { name: "Colombia",   students: ["WARA MADELIN RAMIREZ CHOQUETICLLA", "RENE MAMANI FERNANDEZ", "ESTEFANY MAYA CHOQUECALLATA CALLE", "BELINDA FERNANDEZ COLQUE", "KAREM GABRIELA SALVATIERRA SOLANO"] },
+      { name: "Perú",       students: ["NELLY ASTETE CHUNGARA", "EDWIN INGALA VILLCARANI", "JESSICA HUANCA MAMANI", "SANTUSA TASTA CAYO", "KEVIN CHURA PEREZ"] }
+    ];
+
+    const MIN_PUNTAJE = 0;
+    const MAX_PUNTAJE = 500;
+
+    const state = {
+      results: [],
+      totalStudents: 0,
+      globalAverage: 0,
+      leader: "—"
+    };
+
+    const GREEN = "#0F4C2E";
+    const GREEN_HOVER = "#16653E";
+    const GOLD = "#C6A34F";
+    const GOLD_DARK = "#A88534";
+
+    function initRealChart() {
+      const ctx = document.getElementById("chart-real").getContext("2d");
+      const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+      gradient.addColorStop(0, GREEN);
+      gradient.addColorStop(1, "#0A261A");
+
+      new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: REAL_DATA.map(d => d.country),
+          datasets: [{
+            label: "Puntaje Real PISA 2025",
+            data: REAL_DATA.map(d => d.score),
+            backgroundColor: gradient,
+            hoverBackgroundColor: GOLD,
+            borderRadius: 6,
+            borderSkipped: false,
+            barPercentage: 0.65
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: "#0A261A",
+              titleColor: GOLD,
+              bodyColor: "#FFFFFF",
+              padding: 12,
+              cornerRadius: 8,
+              displayColors: false,
+              callbacks: { label: (c) => ` ${c.parsed.y} puntos` }
+            }
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { color: "#4A4A4A", font: { size: 12, weight: "700" } } },
+            y: { beginAtZero: true, max: 500, ticks: { color: "#7B8794", stepSize: 100, font: { size: 11 } }, grid: { color: "#E6E8E7" } }
+          }
+        }
+      });
+    }
+
+    function getPerformance(score) {
+      if (score === 0) return { label: "Sin Datos (En espera)", variant: "none" };
+      if (score <= 249) return { label: "Debajo del Mínimo", variant: "bad" };
+      if (score <= 349) return { label: "Básico / Mínimo", variant: "mid" };
+      if (score <= 449) return { label: "Intermedio", variant: "good" };
+      return { label: "Avanzado", variant: "good" };
+    }
+
+    function applyBadgeVariant(el, variant) {
+      el.classList.remove("badge--none", "badge--bad", "badge--mid", "badge--good");
+      el.classList.add(`badge--${variant}`);
+    }
+
+    function formatNumber(n) {
+      return new Intl.NumberFormat("es-ES", { maximumFractionDigits: 1 }).format(n);
+    }
+
+    function renderCountries() {
+      const grid = document.getElementById("countries-grid");
+      const fragment = document.createDocumentFragment();
+
+      COUNTRIES.forEach((country) => {
+        const block = document.createElement("article");
+        block.className = "country-block";
+
+        const header = document.createElement("header");
+        header.className = "country-block__header";
+
+        const nameEl = document.createElement("span");
+        nameEl.className = "country-block__name";
+        nameEl.textContent = country.name;
+
+        const countEl = document.createElement("span");
+        countEl.className = "country-block__count";
+        countEl.textContent = `${country.students.length} est.`;
+
+        header.appendChild(nameEl);
+        header.appendChild(countEl);
+
+        const list = document.createElement("ul");
+        list.className = "student-list";
+
+        country.students.forEach((studentName, studentIndex) => {
+          const item = document.createElement("li");
+          item.className = "student-item";
+
+          const num = document.createElement("span");
+          num.className = "student-item__number";
+          num.textContent = studentIndex + 1;
+
+          const name = document.createElement("span");
+          name.className = "student-item__name";
+          name.textContent = studentName;
+
+          const input = document.createElement("input");
+          input.type = "number";
+          input.className = "student-item__input";
+          input.min = MIN_PUNTAJE;
+          input.max = MAX_PUNTAJE;
+          input.placeholder = "—";
+          input.setAttribute("aria-label", `Puntaje de ${studentName} en ${country.name}`);
+          input.dataset.country = country.name;
+          input.dataset.studentIndex = studentIndex;
+
+          input.addEventListener("input", () => {
+            let val = Number(input.value);
+            if (Number.isNaN(val)) return;
+            if (val < MIN_PUNTAJE) input.value = MIN_PUNTAJE;
+            if (val > MAX_PUNTAJE) input.value = MAX_PUNTAJE;
+          });
+
+          item.appendChild(num);
+          item.appendChild(name);
+          item.appendChild(input);
+          list.appendChild(item);
+        });
+
+        block.appendChild(header);
+        block.appendChild(list);
+        fragment.appendChild(block);
+      });
+
+      grid.appendChild(fragment);
+    }
+
+    function computeResults() {
+      const results = [];
+      let totalSum = 0;
+      let totalCount = 0;
+
+      COUNTRIES.forEach((country) => {
+        const inputs = document.querySelectorAll(`.student-item__input[data-country="${country.name}"]`);
+        let sum = 0;
+        let count = 0;
+
+        inputs.forEach((input) => {
+          const val = Number(input.value);
+          if (input.value !== "" && !Number.isNaN(val) && val > 0) {
+            sum += val;
+            count++;
+          }
+        });
+
+        const average = count > 0 ? Math.round((sum / count) * 10) / 10 : 0;
+        results.push({ country: country.name, average });
+        totalSum += sum;
+        totalCount += count;
+      });
+
+      results.sort((a, b) => b.average - a.average);
+
+      state.results = results;
+      state.totalStudents = totalCount;
+      state.globalAverage = totalCount > 0 ? Math.round((totalSum / totalCount) * 10) / 10 : 0;
+      state.leader = results.find((r) => r.average > 0)?.country || "—";
+    }
+
+    function updateKPIs() {
+      document.getElementById("kpi-total").textContent = formatNumber(state.totalStudents);
+      document.getElementById("kpi-average").textContent = formatNumber(state.globalAverage);
+      document.getElementById("kpi-leader").textContent = state.leader;
+    }
+
+    function updateTable() {
+      const tbody = document.getElementById("table-body");
+      tbody.innerHTML = "";
+      const fragment = document.createDocumentFragment();
+
+      state.results.forEach((result, index) => {
+        const tr = document.createElement("tr");
+
+        const tdRank = document.createElement("td");
+        tdRank.className = "cell-rank";
+        tdRank.textContent = index + 1;
+
+        const tdCountry = document.createElement("td");
+        tdCountry.className = "cell-country";
+        tdCountry.textContent = result.country;
+
+        const tdScore = document.createElement("td");
+        tdScore.className = "cell-score";
+        tdScore.textContent = formatNumber(result.average);
+
+        const tdBadge = document.createElement("td");
+        const badge = document.createElement("span");
+        const perf = getPerformance(result.average);
+        badge.className = "badge";
+        applyBadgeVariant(badge, perf.variant);
+        badge.textContent = perf.label;
+        tdBadge.appendChild(badge);
+
+        tr.appendChild(tdRank);
+        tr.appendChild(tdCountry);
+        tr.appendChild(tdScore);
+        tr.appendChild(tdBadge);
+        fragment.appendChild(tr);
+      });
+
+      tbody.appendChild(fragment);
+    }
+
+    let chartInstance = null;
+
+    function initChart() {
+      const ctx = document.getElementById("bar-chart").getContext("2d");
+      chartInstance = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: COUNTRIES.map((c) => c.name),
+          datasets: [{
+            label: "Promedio Simulado",
+            data: COUNTRIES.map(() => 0),
+            backgroundColor: GOLD,
+            hoverBackgroundColor: GOLD_DARK,
+            borderRadius: 6,
+            borderSkipped: false,
+            barPercentage: 0.62
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: { duration: 700, easing: "easeOutQuart" },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: GREEN,
+              titleColor: "#FFFFFF",
+              bodyColor: "#E8F2EC",
+              padding: 10,
+              cornerRadius: 6,
+              displayColors: false,
+              callbacks: { label: (c) => ` ${c.parsed.y} pts` }
+            }
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { color: "#4A4A4A", font: { size: 12, weight: "600" } } },
+            y: { beginAtZero: true, max: MAX_PUNTAJE, ticks: { color: "#7B8794", font: { size: 11 }, stepSize: 100 }, grid: { color: "#E6E8E7" } }
+          }
+        }
+      });
+    }
+
+    function updateChart() {
+      if (!chartInstance) return;
+      chartInstance.data.datasets[0].data = COUNTRIES.map((c) => {
+        const r = state.results.find((res) => res.country === c.name);
+        return r ? r.average : 0;
+      });
+      chartInstance.update();
+    }
+
+    function applyGrades() {
+      computeResults();
+      updateKPIs();
+      updateTable();
+      updateChart();
+    }
+
+    function init() {
+      initRealChart();
+      renderCountries();
+      initChart();
+      computeResults();
+      updateKPIs();
+      updateTable();
+      updateChart();
+      document.getElementById("apply-btn").addEventListener("click", applyGrades);
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      window.addEventListener("load", init);
+    }
+  </script>
+
+</body>
+</html>
