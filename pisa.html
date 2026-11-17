@@ -191,7 +191,7 @@
       width: 100%;
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: var(--sp-3) var(--sp-3) var(--sp-6); /* Ajuste de padding inferior */
+      padding: var(--sp-3) var(--sp-3) var(--sp-6);
       display: flex;
       flex-direction: column;
       gap: var(--sp-5);
@@ -243,7 +243,7 @@
     .reales-panel {
       display: grid;
       grid-template-columns: 1.2fr 1fr;
-      gap: var(--sp-4); /* Más espacio entre tarjetas laterales */
+      gap: var(--sp-4);
       align-items: stretch;
       margin-bottom: var(--sp-5);
     }
@@ -253,7 +253,7 @@
       border: 1px solid var(--border-soft);
       border-radius: var(--radius);
       box-shadow: var(--shadow-sm);
-      padding: var(--sp-4); /* Más padding interno para que respire */
+      padding: var(--sp-4);
       display: flex;
       flex-direction: column;
       transition: box-shadow .3s ease, transform .3s ease;
@@ -265,7 +265,7 @@
       align-items: center;
       justify-content: space-between;
       gap: var(--sp-2);
-      margin-bottom: var(--sp-4); /* Más separación del título al contenido */
+      margin-bottom: var(--sp-4);
       padding-bottom: var(--sp-2);
       border-bottom: 2px solid var(--green-soft);
     }
@@ -444,12 +444,262 @@
       background: linear-gradient(90deg, transparent, rgba(185,212,196,.6), transparent);
     }
 
+    /* ===== Bloque "Visualizar Notas" ===== */
+    .access-panel {
+      background: var(--card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: var(--sp-4);
+      margin-bottom: var(--sp-5);
+    }
+
+    .access-panel__header {
+      text-align: center;
+      margin-bottom: var(--sp-4);
+    }
+
+    .access-panel__title {
+      font-family: var(--font-title);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--green);
+      margin-bottom: var(--sp-1);
+    }
+
+    .access-panel__sub {
+      font-size: .92rem;
+      color: var(--label);
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .access-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      max-width: 380px;
+      margin: 0 auto var(--sp-3);
+      background: var(--green-soft);
+      padding: 6px;
+      border-radius: 14px;
+      border: 1px solid var(--green-line);
+    }
+
+    .access-toggle button {
+      font-family: inherit;
+      font-size: .85rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--green);
+      background: transparent;
+      border: none;
+      padding: 11px 8px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background .25s ease, color .25s ease, box-shadow .25s ease;
+    }
+
+    .access-toggle button[aria-pressed="true"] {
+      background: var(--green);
+      color: #fff;
+      box-shadow: 0 6px 16px -8px rgba(15,76,46,.6);
+    }
+
+    .access-toggle button[aria-pressed="false"]:hover {
+      background: rgba(15,76,46,.08);
+    }
+
+    .access-form {
+      max-width: 480px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+    }
+
+    .access-form .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .access-form label {
+      font-size: .74rem;
+      font-weight: 800;
+      color: var(--label);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .access-form .input-group {
+      display: flex;
+      align-items: center;
+      background: #F7F9F8;
+      border: 1.5px solid var(--border-soft);
+      border-radius: 12px;
+      transition: border-color .25s ease, box-shadow .25s ease;
+    }
+
+    .access-form .input-group:focus-within {
+      border-color: var(--green);
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(15,76,46,.10);
+    }
+
+    .access-form .input-group svg {
+      width: 20px; height: 20px;
+      margin-left: 14px;
+      color: var(--label);
+      flex: 0 0 auto;
+    }
+
+    .access-form .input-group input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--ink);
+      padding: 13px 14px 13px 12px;
+      min-width: 0;
+    }
+
+    #accessNombre { text-transform: uppercase; }
+
+    /* === NUEVO: botón del ojo para el carnet === */
+    .access-form .toggle-eye {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      margin-right: 4px;
+      border: none;
+      background: transparent;
+      border-radius: 10px;
+      cursor: pointer;
+      color: var(--label);
+      transition: background .22s ease, color .22s ease, transform .22s ease;
+      flex: 0 0 auto;
+    }
+    .access-form .toggle-eye:hover {
+      background: rgba(15,76,46,.08);
+      color: var(--green);
+    }
+    .access-form .toggle-eye:active { transform: scale(.9); }
+    .access-form .toggle-eye svg {
+      width: 20px; height: 20px;
+      margin: 0;
+      color: inherit;
+    }
+
+    .access-btn {
+      font-family: inherit;
+      font-size: .95rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-hover) 100%);
+      border: 1px solid rgba(198,163,79,.5);
+      border-radius: var(--radius-sm);
+      padding: var(--sp-2) var(--sp-4);
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .25s ease;
+      box-shadow: 0 6px 20px -8px rgba(15,76,46,.6);
+      margin-top: var(--sp-1);
+    }
+
+    .access-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -8px rgba(15,76,46,.7);
+      border-color: var(--gold);
+    }
+
+    .access-btn:disabled {
+      opacity: .65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .access-msg {
+      display: none;
+      margin-top: var(--sp-2);
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: .86rem;
+      font-weight: 600;
+      text-align: center;
+    }
+    .access-msg.show { display: block; }
+    .access-msg.error   { background: var(--error-soft); color: var(--error); border: 1.5px solid rgba(198,40,40,.25); }
+    .access-msg.success { background: var(--green-soft); color: var(--green); border: 1.5px solid rgba(15,76,46,.25); }
+
+    /* Nota personal resaltada */
+    .personal-grade-card {
+      margin: 0 auto var(--sp-4);
+      max-width: 520px;
+      background: linear-gradient(135deg, #0F4C2E 0%, #16653E 100%);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: var(--sp-3) var(--sp-4);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(198,163,79,.6);
+      text-align: center;
+      animation: popIn .5s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: translateY(12px) scale(.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .personal-grade-card__label {
+      font-size: .74rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 6px;
+    }
+
+    .personal-grade-card__name {
+      font-family: var(--font-title);
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: var(--sp-1);
+    }
+
+    .personal-grade-card__country {
+      font-size: .85rem;
+      color: #C9DDD2;
+      margin-bottom: var(--sp-2);
+    }
+
+    .personal-grade-card__value {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--gold-light);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .personal-grade-card__hint {
+      font-size: .78rem;
+      color: #C9DDD2;
+      margin-top: var(--sp-1);
+    }
+
     .simulation-section { display: flex; flex-direction: column; gap: var(--sp-5); }
 
     .countries-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: var(--sp-4); /* Más separación entre países */
+      gap: var(--sp-4);
     }
 
     .country-block {
@@ -460,6 +710,11 @@
       display: flex;
       flex-direction: column;
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: box-shadow .3s ease;
+    }
+
+    .country-block.highlight {
+      box-shadow: 0 0 0 3px var(--gold), var(--shadow);
     }
 
     .country-block__header {
@@ -535,6 +790,35 @@
       box-shadow: 0 0 0 3px rgba(15,76,46,.15);
     }
 
+    /* Inputs ocultos hasta autorización */
+    body:not(.notas-desbloqueadas) .student-item__input {
+      color: transparent;
+      text-shadow: 0 0 8px rgba(15,76,46,.55);
+      cursor: not-allowed;
+      caret-color: transparent;
+    }
+    body:not(.notas-desbloqueadas) .student-item__input:focus {
+      border-color: var(--green-line);
+      box-shadow: none;
+    }
+    body:not(.notas-desbloqueadas) .btn-apply {
+      opacity: .5;
+      pointer-events: none;
+      filter: grayscale(.4);
+    }
+
+    .student-item.mine {
+      background: var(--gold-soft) !important;
+      box-shadow: inset 4px 0 0 var(--gold);
+    }
+
+    .student-item.mine .student-item__input {
+      color: var(--green);
+      text-shadow: none;
+      border-color: var(--gold);
+      background: #fff;
+    }
+
     .apply-section { display: flex; justify-content: center; padding-top: var(--sp-4); }
 
     .btn-apply {
@@ -563,15 +847,15 @@
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: var(--sp-4); /* Aumentado para evitar que choquen */
-      margin-bottom: var(--sp-4); /* Separación con el bloque inferior */
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-4);
     }
     
     .kpi {
       background: var(--card);
       border: 1px solid var(--border-soft);
       border-radius: var(--radius-sm);
-      padding: var(--sp-3) var(--sp-4); /* Más espacio horizontal interno */
+      padding: var(--sp-3) var(--sp-4);
       display: flex;
       flex-direction: column;
       gap: var(--sp-1);
@@ -607,7 +891,7 @@
     .visual-grid {
       display: grid;
       grid-template-columns: 1.35fr 1fr;
-      gap: var(--sp-4); /* Aumentado para que no se peguen las tarjetas de abajo */
+      gap: var(--sp-4);
       align-items: start;
     }
     .chart-wrapper--sim { height: 380px; }
@@ -635,9 +919,8 @@
         gap: var(--sp-4);
         padding-top: var(--sp-4);
       }
-      /* --- CAMBIO 1: layout de imágenes en tablet/móvil --- */
       .hero__inner {
-        grid-template-columns: 1fr 1fr;   /* dos columnas para las imágenes */
+        grid-template-columns: 1fr 1fr;
         grid-template-areas:
           "content content"
           "left    right";
@@ -652,7 +935,7 @@
         max-width: 220px; 
         width: 100%;
         margin: 0 auto; 
-        aspect-ratio: 3/4;                 /* restauramos proporción original */
+        aspect-ratio: 3/4;
         transform: none;
       }
       .hero__media--right { transform: none; }
@@ -673,7 +956,6 @@
       .card { padding: var(--sp-3); }
       .btn-apply { width: 100%; padding: var(--sp-2) var(--sp-3); }
       
-      /* --- CAMBIO 2: en móvil, las imágenes van lado a lado pequeñas --- */
       .hero__inner {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -814,7 +1096,69 @@
         </article>
       </div>
 
-      <div class="divider">A continuación · Simulación Estadística</div>
+      <div class="divider">A continuación · Visualización y Simulación Estadística</div>
+    </section>
+
+    <!-- ============================================================
+         NUEVO BLOQUE: VISUALIZAR NOTAS (Docente / Estudiante)
+         ============================================================ -->
+    <section class="access-panel" aria-labelledby="access-title">
+      <div class="access-panel__header">
+        <h2 class="access-panel__title" id="access-title">🔎 Visualizar Notas</h2>
+        <p class="access-panel__sub">
+          Accede como docente para ver y editar todos los puntajes, o como estudiante para consultar únicamente tu nota.
+        </p>
+      </div>
+
+      <div class="access-toggle" role="group" aria-label="Seleccione su rol">
+        <button type="button" id="btnRolDocente" aria-pressed="true">Docente</button>
+        <button type="button" id="btnRolEstudiante" aria-pressed="false">Estudiante</button>
+      </div>
+
+      <form class="access-form" id="accessForm" novalidate autocomplete="off">
+        <div class="field">
+          <label for="accessNombre">Nombre Completo</label>
+          <div class="input-group">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            <input type="text" id="accessNombre" name="accessNombre" placeholder="Escriba su nombre completo" spellcheck="false" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="accessCarnet">Número de Carnet (C.I.)</label>
+          <div class="input-group">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="5" width="20" height="14" rx="2"/>
+              <path d="M2 10h20"/>
+            </svg>
+            <input type="password" id="accessCarnet" name="accessCarnet" placeholder="Solo números" inputmode="numeric" pattern="[0-9]*" required>
+            <button type="button" class="toggle-eye" id="accessToggleEye" aria-label="Mostrar carnet" aria-pressed="false">
+              <svg id="accessEyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="access-btn" id="accessBtn">Saber mi nota</button>
+
+        <div class="access-msg" id="accessMsg" role="alert" aria-live="polite"></div>
+      </form>
+
+      <!-- Tarjeta de nota personal (solo estudiante) -->
+      <div id="personalGrade" hidden>
+        <div class="personal-grade-card">
+          <div class="personal-grade-card__label">Tu resultado PISA 2025</div>
+          <div class="personal-grade-card__name" id="pgNombre">—</div>
+          <div class="personal-grade-card__country" id="pgPais">—</div>
+          <div class="personal-grade-card__value" id="pgNota">—</div>
+          <div class="personal-grade-card__hint">Puntaje registrado en la simulación</div>
+        </div>
+      </div>
     </section>
 
     <!-- SECCIÓN: SIMULACIÓN -->
@@ -892,11 +1236,12 @@
 
   </main>
 
-  <!-- PIE DE PÁGINA ELIMINADO SEGÚN SOLICITUD -->
-
   <script>
     "use strict";
 
+    /* ============================================================
+       DATOS REALES
+       ============================================================ */
     const REAL_DATA = [
       { country: "Chile",      score: 436, diff: -25 },
       { country: "Uruguay",    score: 423, diff: -38 },
@@ -907,15 +1252,83 @@
       { country: "Perú",       score: 390, diff: -71 }
     ];
 
+    /* ============================================================
+       DATOS DE ESTUDIANTES (con carnet)
+       ============================================================ */
     const COUNTRIES = [
-      { name: "Chile",      students: ["JOSE ALEJANDRO LOPEZ UZEDA", "WENDALY CHOQUE FLORES", "ALBERT ALEXANDER GUARACHI RAMIREZ", "ARIEL AGUSTIN QUISPE MACHACA", "GUSTAVO DELGADO CONDORI"] },
-      { name: "Uruguay",    students: ["JOSE LUIS BERNABE CHOQUE", "MARIANE JHULIANA ZOLA BELTRAN", "EYDAN LINO MAMANI LAIME", "CRISTOPHER JANCO BUENO", "BENJAMIN NINA CHOQUECALLATA"] },
-      { name: "Costa Rica", students: ["FABIAN ALEJANDRO VALDA CONDE", "FERNANDO AYAVIRI BUENO", "CAMILA KENIA ZUÑAGUA ACARAPI", "AXEL RODRIGO CHOQUE FLORES", "ARACELY BARRETA CRISPIN"] },
-      { name: "México",     students: ["JUAN ALEJANDRO FLORES CHOQUE", "FABIANA TERESA VARGAS QUISPE", "MICAELA EVELYN ARROYO MOYA", "WILLIAM ABEL CAYOJA LOPEZ", "NILA DAIRA POZO MAYTA"] },
-      { name: "Brasil",     students: ["JOSE ANGEL MARTINEZ CHALLAPA", "MIRIAM BARRA SERRANO", "GONZALO BENIGNO CHAVEZ TAPIA", "RODRIGO PACHECO PEÑAFIEL", "LUIS ALEJANDRO PADILLA MONTAÑO"] },
-      { name: "Colombia",   students: ["WARA MADELIN RAMIREZ CHOQUETICLLA", "RENE MAMANI FERNANDEZ", "ESTEFANY MAYA CHOQUECALLATA CALLE", "BELINDA FERNANDEZ COLQUE", "KAREM GABRIELA SALVATIERRA SOLANO"] },
-      { name: "Perú",       students: ["NELLY ASTETE CHUNGARA", "EDWIN INGALA VILLCARANI", "JESSICA HUANCA MAMANI", "SANTUSA TASTA CAYO", "KEVIN CHURA PEREZ"] }
+      { name: "Chile",      students: [
+        { name: "JOSE ALEJANDRO LOPEZ UZEDA", carnet: "10533695" },
+        { name: "WENDALY CHOQUE FLORES", carnet: "7392394" },
+        { name: "ALBERT ALEXANDER GUARACHI RAMIREZ", carnet: "9069056" },
+        { name: "ARIEL AGUSTIN QUISPE MACHACA", carnet: "8595320" },
+        { name: "GUSTAVO DELGADO CONDORI", carnet: "9337787" }
+      ]},
+      { name: "Uruguay",    students: [
+        { name: "JOSE LUIS BERNABE CHOQUE", carnet: "7338504" },
+        { name: "MARIANE JHULIANA ZOLA BELTRAN", carnet: "13092761" },
+        { name: "EYDAN LINO MAMANI LAIME", carnet: "7405407" },
+        { name: "CRISTOPHER JANCO BUENO", carnet: "12466737" },
+        { name: "BENJAMIN NINA CHOQUECALLATA", carnet: "7277707" }
+      ]},
+      { name: "Costa Rica", students: [
+        { name: "FABIAN ALEJANDRO VALDA CONDE", carnet: "12740583" },
+        { name: "FERNANDO AYAVIRI BUENO", carnet: "12465108" },
+        { name: "CAMILA KENIA ZUÑAGUA ACARAPI", carnet: "10918551" },
+        { name: "AXEL RODRIGO CHOQUE FLORES", carnet: "7452874" },
+        { name: "ARACELY BARRETA CRISPIN", carnet: "5064763" }
+      ]},
+      { name: "México",     students: [
+        { name: "JUAN ALEJANDRO FLORES CHOQUE", carnet: "7362068" },
+        { name: "FABIANA TERESA VARGAS QUISPE", carnet: "14899927" },
+        { name: "MICAELA EVELYN ARROYO MOYA", carnet: "7335578" },
+        { name: "WILLIAM ABEL CAYOJA LOPEZ", carnet: "7371099" },
+        { name: "NILA DAIRA POZO MAYTA", carnet: "13253647" }
+      ]},
+      { name: "Brasil",     students: [
+        { name: "JOSE ANGEL MARTINEZ CHALLAPA", carnet: "7352591" },
+        { name: "MIRIAM BARRA SERRANO", carnet: "12877635" },
+        { name: "GONZALO BENIGNO CHAVEZ TAPIA", carnet: "9413917" },
+        { name: "RODRIGO PACHECO PEÑAFIEL", carnet: "13859394" },
+        { name: "LUIS ALEJANDRO PADILLA MONTAÑO", carnet: "14461324" }
+      ]},
+      { name: "Colombia",   students: [
+        { name: "WARA MADELIN RAMIREZ CHOQUETICLLA", carnet: "7413133" },
+        { name: "RENE MAMANI FERNANDEZ", carnet: "7403260" },
+        { name: "ESTEFANY MAYA CHOQUECALLATA CALLE", carnet: "12997943" },
+        { name: "BELINDA FERNANDEZ COLQUE", carnet: "13221244" },
+        { name: "KAREM GABRIELA SALVATIERRA SOLANO", carnet: "14424504" }
+      ]},
+      { name: "Perú",       students: [
+        { name: "NELLY ASTETE CHUNGARA", carnet: "7315238" },
+        { name: "EDWIN INGALA VILLCARANI", carnet: "13189473" },
+        { name: "JESSICA HUANCA MAMANI", carnet: "7399468" },
+        { name: "SANTUSA TASTA CAYO", carnet: "7307568" },
+        { name: "KEVIN CHURA PEREZ", carnet: "7362286" }
+      ]}
     ];
+
+    /* ============================================================
+       DOCENTES AUTORIZADOS
+       ============================================================ */
+    const DOCENTES = {
+      "ANDRES JULIO QUISBERT DIAZ": "73835899",
+      "NAHUEL IGNACIO VELASQUEZ CABEZAS": "14240959"
+    };
+
+    /* ============================================================
+       NOTAS BASE OCULTAS (descendente por país: 500, 499, 498...)
+       ============================================================ */
+    const NOTAS_BASE = (() => {
+      const map = {};
+      let valor = 500;
+      COUNTRIES.forEach((country) => {
+        country.students.forEach((student) => {
+          map[student.name] = valor;
+          valor -= 1;
+        });
+      });
+      return map;
+    })();
 
     const MIN_PUNTAJE = 0;
     const MAX_PUNTAJE = 500;
@@ -924,14 +1337,19 @@
       results: [],
       totalStudents: 0,
       globalAverage: 0,
-      leader: "—"
+      leader: "—",
+      rolAcceso: "docente",
+      desbloqueado: false,
+      estudianteActual: null
     };
 
     const GREEN = "#0F4C2E";
-    const GREEN_HOVER = "#16653E";
     const GOLD = "#C6A34F";
     const GOLD_DARK = "#A88534";
 
+    /* ============================================================
+       CHARTS
+       ============================================================ */
     function initRealChart() {
       const ctx = document.getElementById("chart-real").getContext("2d");
       const gradient = ctx.createLinearGradient(0, 0, 0, 400);
@@ -992,13 +1410,18 @@
       return new Intl.NumberFormat("es-ES", { maximumFractionDigits: 1 }).format(n);
     }
 
+    /* ============================================================
+       RENDER DE PAÍSES Y ESTUDIANTES
+       ============================================================ */
     function renderCountries() {
       const grid = document.getElementById("countries-grid");
+      grid.innerHTML = "";
       const fragment = document.createDocumentFragment();
 
       COUNTRIES.forEach((country) => {
         const block = document.createElement("article");
         block.className = "country-block";
+        block.dataset.country = country.name;
 
         const header = document.createElement("header");
         header.className = "country-block__header";
@@ -1017,9 +1440,10 @@
         const list = document.createElement("ul");
         list.className = "student-list";
 
-        country.students.forEach((studentName, studentIndex) => {
+        country.students.forEach((student, studentIndex) => {
           const item = document.createElement("li");
           item.className = "student-item";
+          item.dataset.studentName = student.name;
 
           const num = document.createElement("span");
           num.className = "student-item__number";
@@ -1027,17 +1451,17 @@
 
           const name = document.createElement("span");
           name.className = "student-item__name";
-          name.textContent = studentName;
+          name.textContent = student.name;
 
           const input = document.createElement("input");
           input.type = "number";
           input.className = "student-item__input";
           input.min = MIN_PUNTAJE;
           input.max = MAX_PUNTAJE;
-          input.placeholder = "—";
-          input.setAttribute("aria-label", `Puntaje de ${studentName} en ${country.name}`);
+          input.value = NOTAS_BASE[student.name];
+          input.setAttribute("aria-label", `Puntaje de ${student.name} en ${country.name}`);
           input.dataset.country = country.name;
-          input.dataset.studentIndex = studentIndex;
+          input.dataset.studentName = student.name;
 
           input.addEventListener("input", () => {
             let val = Number(input.value);
@@ -1060,6 +1484,9 @@
       grid.appendChild(fragment);
     }
 
+    /* ============================================================
+       CÁLCULOS
+       ============================================================ */
     function computeResults() {
       const results = [];
       let totalSum = 0;
@@ -1188,12 +1615,163 @@
     }
 
     function applyGrades() {
+      if (!state.desbloqueado) return;
       computeResults();
       updateKPIs();
       updateTable();
       updateChart();
     }
 
+    /* ============================================================
+       BLOQUE VISUALIZAR NOTAS
+       ============================================================ */
+    const accessForm    = document.getElementById("accessForm");
+    const accessNombre  = document.getElementById("accessNombre");
+    const accessCarnet  = document.getElementById("accessCarnet");
+    const accessBtn     = document.getElementById("accessBtn");
+    const accessMsg     = document.getElementById("accessMsg");
+    const btnRolDoc     = document.getElementById("btnRolDocente");
+    const btnRolEst     = document.getElementById("btnRolEstudiante");
+    const personalGrade = document.getElementById("personalGrade");
+    const pgNombre      = document.getElementById("pgNombre");
+    const pgPais        = document.getElementById("pgPais");
+    const pgNota        = document.getElementById("pgNota");
+    const accessToggleEye = document.getElementById("accessToggleEye");
+    const accessEyeIcon   = document.getElementById("accessEyeIcon");
+
+    /* === NUEVO: mostrar/ocultar carnet === */
+    const SVG_EYE_OPEN = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+    const SVG_EYE_OFF  = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+
+    accessToggleEye.addEventListener("click", function () {
+      const visible = accessCarnet.type === "text";
+      accessCarnet.type = visible ? "password" : "text";
+      accessEyeIcon.innerHTML = visible ? SVG_EYE_OPEN : SVG_EYE_OFF;
+      this.setAttribute("aria-pressed", String(!visible));
+      this.setAttribute("aria-label", visible ? "Mostrar carnet" : "Ocultar carnet");
+      accessCarnet.focus();
+    });
+
+    function setRolAcceso(rol) {
+      state.rolAcceso = rol;
+      const esDoc = rol === "docente";
+      btnRolDoc.setAttribute("aria-pressed", String(esDoc));
+      btnRolEst.setAttribute("aria-pressed", String(!esDoc));
+      accessBtn.textContent = esDoc ? "Ver notas" : "Saber mi nota";
+      limpiarMensajeAcceso();
+      personalGrade.hidden = true;
+    }
+
+    btnRolDoc.addEventListener("click", () => setRolAcceso("docente"));
+    btnRolEst.addEventListener("click", () => setRolAcceso("estudiante"));
+
+    function mostrarMensajeAcceso(texto, tipo) {
+      accessMsg.textContent = texto;
+      accessMsg.className = `access-msg show ${tipo}`;
+    }
+    function limpiarMensajeAcceso() {
+      accessMsg.textContent = "";
+      accessMsg.className = "access-msg";
+    }
+
+    accessNombre.addEventListener("input", function () {
+      const start = this.selectionStart, end = this.selectionEnd;
+      this.value = this.value.toUpperCase();
+      try { this.setSelectionRange(start, end); } catch (e) {}
+      limpiarMensajeAcceso();
+    });
+
+    accessCarnet.addEventListener("input", function () {
+      const limpio = this.value.replace(/\D/g, "");
+      if (this.value !== limpio) this.value = limpio;
+      limpiarMensajeAcceso();
+    });
+
+    function autenticarEstudiante(nombre, carnet) {
+      for (const country of COUNTRIES) {
+        const found = country.students.find(
+          (s) => s.name === nombre && s.carnet === carnet
+        );
+        if (found) return { ...found, pais: country.name };
+      }
+      return null;
+    }
+
+    function desbloquearDocente() {
+      document.body.classList.add("notas-desbloqueadas");
+      state.desbloqueado = true;
+      state.estudianteActual = null;
+      document.querySelectorAll(".student-item__input").forEach((inp) => {
+        inp.style.color = "";
+        inp.style.textShadow = "none";
+        inp.style.cursor = "";
+      });
+    }
+
+    function resaltarEstudiante(pais, nombre) {
+      document.querySelectorAll(".country-block.highlight").forEach(el => el.classList.remove("highlight"));
+      document.querySelectorAll(".student-item.mine").forEach(el => el.classList.remove("mine"));
+
+      const block = document.querySelector(`.country-block[data-country="${pais}"]`);
+      if (block) {
+        block.classList.add("highlight");
+        block.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      const item = document.querySelector(`.student-item[data-student-name="${nombre}"]`);
+      if (item) {
+        item.classList.add("mine");
+        const input = item.querySelector(".student-item__input");
+        if (input) {
+          input.style.color = "";
+          input.style.textShadow = "none";
+        }
+      }
+    }
+
+    accessForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      limpiarMensajeAcceso();
+      personalGrade.hidden = true;
+
+      const nombre = accessNombre.value.trim().toUpperCase();
+      const carnet = accessCarnet.value.trim();
+
+      if (!nombre || !carnet) {
+        mostrarMensajeAcceso("Complete todos los campos e intente de nuevo.", "error");
+        return;
+      }
+
+      if (state.rolAcceso === "docente") {
+        if (DOCENTES[nombre] === carnet) {
+          desbloquearDocente();
+          mostrarMensajeAcceso(`¡Bienvenido/a, docente ${nombre}! Ya puede ver y editar las notas.`, "success");
+        } else {
+          mostrarMensajeAcceso("Datos incorrectos. Verifique su nombre y carnet.", "error");
+          accessCarnet.value = "";
+          accessCarnet.focus();
+        }
+      } else {
+        const est = autenticarEstudiante(nombre, carnet);
+        if (est) {
+          state.estudianteActual = est;
+          pgNombre.textContent = est.name;
+          pgPais.textContent   = est.pais;
+          const nota = NOTAS_BASE[est.name] ?? 0;
+          pgNota.textContent   = nota;
+          personalGrade.hidden = false;
+          mostrarMensajeAcceso("Nota encontrada. Desplázate a tu país para verla resaltada.", "success");
+          resaltarEstudiante(est.pais, est.name);
+        } else {
+          mostrarMensajeAcceso("Datos incorrectos. Verifique su nombre y carnet.", "error");
+          accessCarnet.value = "";
+          accessCarnet.focus();
+        }
+      }
+    });
+
+    /* ============================================================
+       INIT
+       ============================================================ */
     function init() {
       initRealChart();
       renderCountries();
@@ -1203,6 +1781,7 @@
       updateTable();
       updateChart();
       document.getElementById("apply-btn").addEventListener("click", applyGrades);
+      setRolAcceso("docente");
     }
 
     if (document.readyState === "loading") {
