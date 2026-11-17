@@ -635,10 +635,24 @@
         gap: var(--sp-4);
         padding-top: var(--sp-4);
       }
+      /* --- CAMBIO 1: layout de imágenes en tablet/móvil --- */
+      .hero__inner {
+        grid-template-columns: 1fr 1fr;   /* dos columnas para las imágenes */
+        grid-template-areas:
+          "content content"
+          "left    right";
+        align-items: start;
+        justify-items: center;
+      }
+      .hero__content { grid-area: content; }
+      .hero__media--left  { grid-area: left;  }
+      .hero__media--right { grid-area: right; }
+
       .hero__media { 
-        max-width: 280px; 
+        max-width: 220px; 
+        width: 100%;
         margin: 0 auto; 
-        aspect-ratio: 4/5;
+        aspect-ratio: 3/4;                 /* restauramos proporción original */
         transform: none;
       }
       .hero__media--right { transform: none; }
@@ -659,8 +673,25 @@
       .card { padding: var(--sp-3); }
       .btn-apply { width: 100%; padding: var(--sp-2) var(--sp-3); }
       
-      .hero__inner { display: flex; flex-direction: column; }
-      .hero__content { order: -1; margin-bottom: var(--sp-3); }
+      /* --- CAMBIO 2: en móvil, las imágenes van lado a lado pequeñas --- */
+      .hero__inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+          "content content"
+          "left    right";
+        gap: var(--sp-2);
+      }
+      .hero__content { grid-area: content; order: 0; margin-bottom: 0; }
+      .hero__media--left  { grid-area: left; }
+      .hero__media--right { grid-area: right; }
+
+      .hero__media {
+        max-width: 100%;
+        aspect-ratio: 3/4;
+        transform: none;
+      }
+      .hero__media--right { transform: none; }
     }
   </style>
 </head>
